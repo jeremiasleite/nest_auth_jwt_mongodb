@@ -5,10 +5,13 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { APP_PIPE } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://jeremias:autocad789@ds031657.mlab.com:31657/daniel_imoveis'),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(configuration().databaseUrl),    
     AuthModule,
     UsersModule],
   controllers: [AppController],
