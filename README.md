@@ -2,7 +2,7 @@
 
 ## Description
 
-Este é um projeto base com autenticação jwt, mysql, typeorm, com validação com [class-validator](https://www.npmjs.com/package/class-validator).
+Este é um projeto base com autenticação jwt, mongoose e validação com [class-validator](https://www.npmjs.com/package/class-validator).
 
 ## Installation
 
