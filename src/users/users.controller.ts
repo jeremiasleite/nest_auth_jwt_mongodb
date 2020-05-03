@@ -1,10 +1,10 @@
-import { Controller, Get, UseGuards, Post, Body, Param, Delete, Put, ClassSerializerInterceptor, UseInterceptors, UseFilters } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Body, Param, Delete, Put, ClassSerializerInterceptor, UseInterceptors} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-userDto';
-//import { User } from './dto/user';
 import { UpdateUserDto } from './dto/update-userDto';
 import { User } from './interfaces/user.interface';
+import { ResponseUserDto } from './dto/response-userDto';
 
 @Controller('users')
 export class UsersController {
@@ -19,7 +19,7 @@ export class UsersController {
 
     @Post()
     @UseGuards(JwtAuthGuard)      
-    async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    async create(@Body() createUserDto: CreateUserDto): Promise<ResponseUserDto> {
         return this.usersService.create(createUserDto);
     }
 

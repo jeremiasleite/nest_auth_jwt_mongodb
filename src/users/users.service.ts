@@ -4,18 +4,21 @@ import { UpdateUserDto } from './dto/update-userDto';
 import { CostumeNotFoundException } from 'src/exceptions/notfound.exception';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-//import { User } from './dto/user';
 import { User } from './interfaces/user.interface';
-
+import {hashSync} from 'bcrypt';
+import { ResponseUserDto } from './dto/response-userDto';
 
 @Injectable()
 export class UsersService {
 
   constructor(@InjectModel('User') private userModel: Model<User>) {}
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
+  async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
+    const hash = hashSync(createUserDto.password, 10);
+    createUserDto.password = hash;
+    const createdUser = new this.userModel(createUserDto);    
+    const resut = await createdUser.save();    
+    return new ResponseUserDto(resut._id, resut.username, resut.email, resut.isActive, resut.createdAt);
   }
 
   async findAll(): Promise<User[]>{
