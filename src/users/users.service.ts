@@ -28,7 +28,7 @@ export class UsersService {
 
   async findOne(id: string): Promise<User> {
     const usuario = this.userModel.findOne({_id:id}).select('_id username email isActive createdAt').exec();    
-    if (!(await usuario)._id) {
+    if (!(await usuario)) {
       throw new CostumeNotFoundException("Usuário não encontrado.")
     }
     return usuario
@@ -43,7 +43,7 @@ export class UsersService {
 
   async findOneUserName(username: string): Promise<User> {
     const usuario = await this.userModel.findOne({ username: username }).exec();
-    if (!(await usuario)._id) {
+    if (!(await usuario)) {
       throw new CostumeNotFoundException("Usuário não encontrado.")
     }
     return usuario as User;
