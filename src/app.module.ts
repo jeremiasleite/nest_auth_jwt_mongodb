@@ -3,23 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_PIPE } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123456789',
-      database: 'nestauth',
-      autoLoadEntities: true,
-      synchronize: true,
-      //logging: true,
-    }),
+    MongooseModule.forRoot('mongodb://jeremias:autocad789@ds031657.mlab.com:31657/daniel_imoveis'),
     AuthModule,
     UsersModule],
   controllers: [AppController],

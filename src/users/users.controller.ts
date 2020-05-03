@@ -1,10 +1,10 @@
 import { Controller, Get, UseGuards, Post, Body, Param, Delete, Put, ClassSerializerInterceptor, UseInterceptors, UseFilters } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-userDto';
+//import { User } from './dto/user';
 import { UpdateUserDto } from './dto/update-userDto';
-import { QueryFailedErrorFilter } from 'src/exceptions/queryFailedError';
+import { User } from './interfaces/user.interface';
 
 @Controller('users')
 export class UsersController {
@@ -12,24 +12,20 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Get()
-    @UseGuards(JwtAuthGuard)
-    @UseInterceptors(ClassSerializerInterceptor)
-    async findAll(): Promise<User[]> {
-        return this.usersService.findAll();
+    @UseGuards(JwtAuthGuard)    
+    async findAll(): Promise<User[]>{
+        return await this.usersService.findAll();
     }
 
     @Post()
-    @UseGuards(JwtAuthGuard)
-    @UseInterceptors(ClassSerializerInterceptor)
-    @UseFilters(new QueryFailedErrorFilter())
+    @UseGuards(JwtAuthGuard)      
     async create(@Body() createUserDto: CreateUserDto): Promise<User> {
         return this.usersService.create(createUserDto);
     }
 
     @Get(':id')
-    @UseGuards(JwtAuthGuard)
-    @UseInterceptors(ClassSerializerInterceptor)   
-    async findOne(@Param('id') id: number){
+    @UseGuards(JwtAuthGuard)       
+    async findOne(@Param('id') id: string){
         return this.usersService.findOne(id);
     }
 
@@ -42,7 +38,7 @@ export class UsersController {
 
     @Delete(':id')
     @UseGuards(JwtAuthGuard)
-    async remove(@Param('id') id: number){
+    async remove(@Param('id') id: string){
         return this.usersService.remove(id)
     }
 
