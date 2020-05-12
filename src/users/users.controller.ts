@@ -12,13 +12,13 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Get()
-    @UseGuards(JwtAuthGuard)    
+    //@UseGuards(JwtAuthGuard)    
     async findAll(): Promise<User[]>{
         return await this.usersService.findAll();
     }
 
     @Post()
-    @UseGuards(JwtAuthGuard)          
+    //@UseGuards(JwtAuthGuard)          
     async create(@Body() createUserDto: CreateUserDto): Promise<ResponseUserDto> {
         return this.usersService.create(createUserDto);
     }
@@ -41,5 +41,4 @@ export class UsersController {
     async remove(@Param('id') id: string){
         return this.usersService.remove(id)
     }
-
 }

@@ -22,8 +22,7 @@ export class UsersService {
     } catch (e) {
       throw new HttpException({
         status: HttpStatus.FORBIDDEN,
-        error: e.message,
-        name: e.name
+        error: e
       }, HttpStatus.FORBIDDEN);
     }
   }
@@ -31,12 +30,11 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     try {
       const list = await this.userModel.find().select('_id username email isActive createdAt').exec();
-      return list as User[];
+      return list;
     } catch (e) {
       throw new HttpException({
         status: HttpStatus.FORBIDDEN,
-        error: e.message,
-        name: e.name
+        error: e
       }, HttpStatus.FORBIDDEN);
     }
   }
@@ -103,4 +101,6 @@ export class UsersService {
       }, HttpStatus.FORBIDDEN);
     }
   }
+
+  
 }
